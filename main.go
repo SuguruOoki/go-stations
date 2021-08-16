@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -51,6 +52,13 @@ func realMain() error {
 	mux := http.NewServeMux()
 
 	// TODO: ここから実装を行う
+	mux.Handle("/hello", http.HandlerFunc(hello))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 
 	return nil
+}
+
+func hello(w http.ResponseWriter, _ *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "Hello World")
 }
